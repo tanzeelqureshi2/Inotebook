@@ -20,7 +20,26 @@ const NoteState=(props)=>{
           "tag": "Special",
           "date": "2022-02-08T11:02:37.676Z",
           "__v": 0
+        },
+        {
+            "_id": "62024dcd3d9f6d2f4b23a1e9",
+            "user": "6200f0b9d3b6f5edcf0c7805",
+            "title": "My engineering note",
+            "description": "For engineering purpose",
+            "tag": "Personal",
+            "date": "2022-02-08T11:02:37.676Z",
+            "__v": 0
+        },
+        {
+            "_id": "62024dcd3d9f6d2f4b23a1e9",
+            "user": "6200f0b9d3b6f5edcf0c7805",
+            "title": "My chemistry note",
+            "description": "Please access the note",
+            "tag": "Chemistry",
+            "date": "2022-02-08T11:02:37.676Z",
+            "__v": 0
         }
+
       ]
       
       const [notes, setNotes] = useState(notesInitial)
