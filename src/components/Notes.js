@@ -1,39 +1,47 @@
-import React, { useContext, useEffect, useRef,useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 
 const Notes = () => {
   const context = useContext(NoteContext);
-  const { notes, getAllNote } = context;
+  const { notes, getAllNote,editNote} = context;
   useEffect(() => {
     getAllNote();
     // eslint-disable-next-line
   }, []);
 
-  const updateNote = (currentNote) => {
-    ref.current.click();
-    setNote({etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag});
-  };
-
-  const ref = useRef(null);
-
   //useState for setting note
   const [note, setNote] = useState({
+    id: "",
     etitle: "",
     edescription: "",
     etag: "default",
   });
 
+  const ref = useRef(null);
+  //For closing modal popup
+  const refClose = useRef(null);
+
+  const updateNote = (currentNote) => {
+    ref.current.click();
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
+  };
 
   //push values of title,description to this function
   const handleClick = (e) => {
-    console.log("Update the note",note);
-    e.preventDefault();
+    //console.log("Update the note", note);
+    editNote(note.id,note.etitle,note.edescription,note.etag);
+    refClose.current.click();
   };
 
   const onChange = (e) => {
-    setNote({...note, [e.target.name]: e.target.value });
+    setNote({ ...note, [e.target.name]: e.target.value });
   };
 
   return (
@@ -117,13 +125,18 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
+                ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button onClick={handleClick} type="button" className="btn btn-primary">
+              <button
+                onClick={handleClick}
+                type="button"
+                className="btn btn-primary"
+              >
                 Update Note
               </button>
             </div>
