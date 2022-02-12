@@ -1,41 +1,46 @@
-import React,{useState} from 'react'
-import {useHistory} from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
   const host = "http://localhost:5000";
   //set state for email and password
-  const [credentials, setCredentials] = useState({name:"",email:"",password:"",cpassword:""})
-  let history=useHistory();
-  const handleSubmit =async (e) => {
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+  let history = useHistory();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   const {name,email,password}=credentials;
+    const { name, email, password } = credentials;
     const response = await fetch(`${host}/api/auth/createuser`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({name,email,password}) 
+      body: JSON.stringify({ name, email, password }),
     });
-    const json=await response.json(); 
+    const json = await response.json();
     console.log(json);
-    if(json.success){
-    //Save the auth token and redirect
-    localStorage.setItem('token',json.authToken);
-    history.push("/");
-    }
-    else{
-
+    if (json.success) {
+      //Save the auth token and redirect
+      localStorage.setItem("token", json.authToken);
+      history.push("/");
+      props.showAlert("Account Created Successfully", "success");
+    } else {
+      props.showAlert("Invalid Details", "danger");
     }
   };
 
   const onChange = (e) => {
-    setCredentials({...credentials, [e.target.name]: e.target.value });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
     <div>
-     <form onSubmit={handleSubmit}>
-     <div className="mb-3">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
           </label>
@@ -65,7 +70,7 @@ const Signup = () => {
             minLength={5}
             required
           />
-           <div id="emailHelp" className="form-text">
+          <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
           </div>
         </div>
@@ -84,9 +89,9 @@ const Signup = () => {
             required
           />
         </div>
-         <div className="mb-3">
+        <div className="mb-3">
           <label htmlFor="cpassword" className="form-label">
-          Confirm Password
+            Confirm Password
           </label>
           <input
             type="password"
@@ -99,15 +104,12 @@ const Signup = () => {
             required
           />
         </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-        >
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

@@ -3,7 +3,7 @@ import NoteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(NoteContext);
   const { notes, getAllNote,editNote} = context;
   useEffect(() => {
@@ -38,6 +38,7 @@ const Notes = () => {
     //console.log("Update the note", note);
     editNote(note.id,note.etitle,note.edescription,note.etag);
     refClose.current.click();
+    props.showAlert("Updated successfully","success");
   };
 
   const onChange = (e) => {
@@ -47,7 +48,7 @@ const Notes = () => {
   return (
     <>
       {/* Use AddNote Component for add note */}
-      <AddNote />
+      <AddNote showAlert={props.showAlert} />
       {/* <!-- Button trigger modal --> */}
       <button
         ref={ref}
@@ -153,7 +154,7 @@ const Notes = () => {
         </div>
         {notes.map((note) => {
           return (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} />
+            <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
           );
         })}
       </div>

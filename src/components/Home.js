@@ -1,12 +1,12 @@
 import React from "react";
 import Notes from './Notes';
 
-const Home = () => {
-  
+export const Home = (props) => {
+  const {showAlert}=props;
   return (
     <div>
       {/* Use Notes Component for fetching notes */}
-      <Notes/>
+      <Notes showAlert={showAlert} />
     </div>
   );
 };
