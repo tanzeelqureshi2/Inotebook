@@ -18,6 +18,7 @@ router.post(
     }),
   ],
   async (req, res) => {
+    let success=false;
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -30,7 +31,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: "Sorry a user with this email already exists" });
+          .json({success,error: "Sorry a user with this email already exists" });
       }
       const salt = await bcrypt.genSalt(10);
       secPass = await bcrypt.hash(req.body.password, salt);
@@ -47,7 +48,8 @@ router.post(
       };
       const authToken = jwt.sign(data, JWT_SECRET);
       // res.json(user);
-      res.json({authToken });
+      success=true;
+      res.json({success,authToken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Some error occured");
