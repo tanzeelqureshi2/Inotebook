@@ -38,9 +38,10 @@ const Signup = (props) => {
   };
 
   return (
-    <div>
+    <div className="mt-2">
+      <h2 className="my-2">Create an account to use iNotebook</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+        <div className="my-3">
           <label htmlFor="name" className="form-label">
             Name
           </label>
@@ -55,7 +56,7 @@ const Signup = (props) => {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="my-3">
           <label htmlFor="email" className="form-label">
             Email address
           </label>
@@ -74,7 +75,7 @@ const Signup = (props) => {
             We'll never share your email with anyone else.
           </div>
         </div>
-        <div className="mb-3">
+        <div className="my-3">
           <label htmlFor="password" className="form-label">
             Password
           </label>
@@ -89,7 +90,7 @@ const Signup = (props) => {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="my-3">
           <label htmlFor="cpassword" className="form-label">
             Confirm Password
           </label>
